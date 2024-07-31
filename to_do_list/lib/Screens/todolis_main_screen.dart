@@ -18,6 +18,7 @@ class _ToDoScreenState extends State<ToDoScreen> {
   TextEditingController DiscriptionController = TextEditingController();
   TodoServices _todoServices = TodoServices();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void AddWork() async {
     if (TitleController.text.isNotEmpty) {
@@ -150,7 +151,6 @@ class _ToDoScreenState extends State<ToDoScreen> {
                       );
                     }),
               ),
-              Spacer(),
               GestureDetector(
                 onTap: () async {
                   await _todoServices.RegisterWork(
@@ -158,13 +158,15 @@ class _ToDoScreenState extends State<ToDoScreen> {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text("Task Added Succesfully"),
                   ));
+                  DiscriptionController.clear();
+                  TitleController.clear();
                 },
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 12.0),
                   width: double.infinity,
                   alignment: Alignment.center,
                   decoration: const ShapeDecoration(
-                    color: Colors.blue,
+                    color: Color.fromRGBO(157, 89, 255, 1),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
                         Radius.circular(4),
@@ -230,30 +232,31 @@ class _ToDoScreenState extends State<ToDoScreen> {
               ],
             ),
           ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  titile,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                    fontFamily: 'UrbanistRegular',
-                    fontWeight: FontWeight.normal,
+          child: GestureDetector(
+            onTap: () {},
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    titile,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
-                ),
-                Text(
-                  description,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                    fontFamily: 'UrbanistRegular',
-                    fontWeight: FontWeight.normal,
+                  Text(
+                    description,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

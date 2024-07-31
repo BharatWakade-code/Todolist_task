@@ -32,4 +32,14 @@ class TodoServices {
         .collection("WorkList")
         .snapshots();
   }
+
+  Future<void> deleteTask(String Documentid) {
+    String currentuser = _auth.currentUser!.uid;
+    return _firestore
+        .collection("Works")
+        .doc(currentuser)
+        .collection("WorkList")
+        .doc(currentuser)
+        .delete();
+  }
 }
